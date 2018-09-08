@@ -81,3 +81,58 @@ class Answers(Resource):
         else:
             # token is either invalid or expired
             raise Unauthorized
+
+
+@api.route("/<int:answer_id>")
+class GetAnswer(Resource):
+    """This class encapsulates the method functions for a particular answer"""
+
+    docu_string = "This endpoint handles PUT requests to the answers resource"
+
+    @api.doc(docu_string)
+    @api.expect(_n_answer, validate=False)
+    @api.marshal_with(_edit_answer_resp)
+    def put(self, question_id, answer_id):
+        """
+        This function is restricted to the author of the answer and the author of the question to edit or mark an answer as preferred. 
+        The ```answer_author_id``` is allowed to edit the answer. 
+        The ```question_author_id``` is allowed to mark the answer as preferred
+        """
+        auth_header = request.headers.get('Authorization')
+        if not auth_header:
+            raise BadRequest("This endpoint requires authorization")
+        auth_token = auth_header.split(" ")[1]
+        response = UserModel().decode_auth_token(auth_token)
+        if isinstance(response, str):
+            # the user is not authorized to view this endpoint
+            raise Unauthorized("You are not allowed to access this resource")
+        else:
+            _locate_question_and_answer(question_id, answer_id)
+            questions = QuestionModel()
+            question_author_id = questions.get_item_by_id(int(question_id))[1]
+            answers = AnswerModel()
+            answer_author_id = answers.get_item_by_id(int(answer_id))[2]
+            if not question_author_id or not answer_author_id:
+                # the answer or question was not found
+                raise NotFound("Details of the question or answer not found.")
+            value = ""
+            # check if user ids match
+            user_id = int(response)
+            if user_id == int(answer_author_id) and user_id != int(question_author_id):
+                try:
+                    new_text = json.loads(request.data.decode().replace("'", '"'))['text']
+                except Exception as error:
+                    raise BadRequest("You have to include a text field")
+                value = answers.update_item(field="text",
+                                            data=new_text,
+                                            item_id=answer_id)[0]
+            elif user_id == int(question_author_id) and user_id != int(answer_author_id):
+                value = "{}".format(answers.toggle_user_preferred(answer_id))
+            else:
+                raise Forbidden("You are not athorized to edit this answer")
+            resp = {
+                "message": "success",
+                "description": "answer updated succesfully",
+                "value": value
+            }
+            return resp, 200
