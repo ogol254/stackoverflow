@@ -136,3 +136,43 @@ class GetAnswer(Resource):
                 "value": value
             }
             return resp, 200
+
+
+@api.route("/<int:answer_id>/vote")
+class VoteAnswer(Resource):
+    """This class encapsulates the vote function for a particular answer"""
+    docu_string = "This endpoint handles PUT requests to the answers resource"
+
+    @api.doc(docu_string)
+    @api.expect(_vote_ans, validate=True)
+    @api.marshal_with(_vote_resp)
+    def put(self, question_id, answer_id):
+        """
+        This endpoint allows an authorized user to upvote or downvote an answer
+        """
+        auth_header = request.headers.get('Authorization')
+        if not auth_header:
+            raise BadRequest("This endpoint requires authorization")
+        auth_token = auth_header.split(" ")[1]
+        response = UserModel().decode_auth_token(auth_token)
+        if isinstance(response, str):
+            # the user is not authorized to access this endpoint
+            raise Unauthorized("You are not allowed to access this resource")
+        else:
+            # vote for the answer
+            # find the question and answer
+            _locate_question_and_answer(question_id, answer_id)
+            answers = AnswerModel()
+            try:
+                vote = int(request.get_json()["vote"])
+            except ValueError:
+                raise BadRequest("The value of vote is irregular")
+            if vote not in [-1, 1]:
+                raise BadRequest("Upvote value not allowed")
+            votes_for_answer = answers.vote_answer(answer_id, vote)
+            resp = {
+                "message": "success",
+                "description": "answer updated succesfully",
+                "new_votes": str(votes_for_answer)
+            }
+            return resp, 200
