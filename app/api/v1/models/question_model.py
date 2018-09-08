@@ -39,6 +39,14 @@ class QuestionModel(BaseModel):
         curr.close()
         return int(question_id)
 
+    def most_answered(self):
+        """Obtains the question with the most answers"""
+        dbconn = self.db
+        curr = dbconn.cursor()
+        curr.execute("""SELECT question_id, COUNT(answer_id) FROM answers GROUP BY question_id ORDER BY COUNT(answer_id) DESC;""")
+        data = curr.fetchone()
+        return data
+
     def get_all(self):
         """This function returns a list of all the questions"""
         dbconn = self.db
