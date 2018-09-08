@@ -162,6 +162,35 @@ class GetQuestion(Resource):
 
     docu_string = "This endpoint allows a user to delete a question."
 
+    @api.doc(docu_string)
+    @api.marshal_with(_delete_resp, code=202)
+    def delete(self, question_id):
+        """This function deletes a question, given the id"""
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or len(auth_header) < 8 or " " not in auth_header:
+            raise BadRequest("Authorization not provided or inadequate.")
+        auth_token = auth_header.split(" ")[1]
+        response = UserModel().decode_auth_token(auth_token)
+        if isinstance(response, str):
+            raise Unauthorized("You do not have the authorization to delete the question")
+        else:
+            # user is authorized
+            questions = QuestionModel()
+            question = questions.get_item_by_id(int(question_id))
+            if question == "Not found":
+                raise NotFound("The question was not located in the database")
+            question_id = question[0]
+            user_id = question[1]
+            # check if user ids match
+            if int(user_id) == int(response):
+                # delete question
+                questions.delete_item(int(question_id), foreign_key="answers")
+            else:
+                raise Forbidden("You are not allowed to delete the question")
+            resp = {"message": "success",
+                    "description": "question deleted succesfully"}
+            return resp, 202
+
 
 @uapi.route("/")
 class GetUserQuestion(Resource):
