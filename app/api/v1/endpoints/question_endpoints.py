@@ -131,6 +131,38 @@ class GetQuestion(Resource):
     @api.doc(docu_string)
     @api.expect(validate=False)
     @api.marshal_with(_get_edit_resp, code=200)
+    def put(self, question_id):
+        """This function edits a question, given the id"""
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or len(auth_header) < 8 or " " not in auth_header:
+            raise BadRequest("Authorization not provided or inadequate.")
+        auth_token = auth_header.split(" ")[1]
+        request_id = UserModel().decode_auth_token(auth_token)
+        if isinstance(request_id, str):
+            raise Unauthorized("You are not authorized to access this resource.")
+        else:
+            # confirm user request
+            update = request.get_json()
+            _validate_input(update)
+            questions = QuestionModel()
+            question = questions.get_item_by_id(int(question_id))
+            if question == "Not found":
+                raise NotFound("The question was not found in the database")
+            question_id = question[0]
+            user_id = question[1]
+            if int(user_id) == int(request_id):
+                # update question
+                for field, data in update.items():
+                    questions.update_item(field=field, data=data,
+                                          item_id=int(question_id))
+            else:
+                raise Forbidden("You are not allowed to edit the question")
+            resp = {"message": "success", "text": str(update)}
+            return resp, 200
+
+    docu_string = "This endpoint allows a user to delete a question."
+
+
 @uapi.route("/")
 class GetUserQuestion(Resource):
     """question views associated with users"""
