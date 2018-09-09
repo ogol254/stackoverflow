@@ -1,8 +1,8 @@
 
 language: python
 env:
-  DATABASE_URL="dbname='stackoverflow11' host='127.0.0.1' port='5432' user='postgres' password=''"
-  DATABASE_TEST_URL="dbname='stackoverflow11' host='127.0.0.1' port='5432' user='postgres' password=''"
+  DATABASE_URL="dbname='stackoverflow_litet' host='127.0.0.1' port='5432' user='postgres' password=''"
+  DATABASE_TEST_URL="dbname='stackoverflow_litet' host='127.0.0.1' port='5432' user='postgres' password=''"
   APP_SETTINGS="testing"
 python:
   - "3.6"
@@ -14,11 +14,12 @@ install:
 services:
   - postgresql
 addons:
-  postgresql: "10.4"
+  postgresql: "9.6"
 
 before_script:
-  - psql -c 'CREATE DATABASE stackoverflow11' -U postgres
+  - psql -c 'CREATE DATABASE stackoverflow_litet' -U postgres
   - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres ;" -U postgres
+
 
 script:
   - nosetests app/tests -v --with-coverage --cover-package=app
