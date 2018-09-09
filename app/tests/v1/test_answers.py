@@ -21,7 +21,7 @@ class TestAnswers(unittest.TestCase):
 
     def setUp(self):
         """Performs variable definition and app initialization"""
-        self.app = create_app()
+        self.app = create_app("testing")
         self.client = self.app.test_client()
 
         self.answer = {

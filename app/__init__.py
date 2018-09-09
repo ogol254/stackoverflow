@@ -92,7 +92,7 @@ def unauthorized(error):
     return response
 
 
-def create_app():
+def create_app(config_name='development'):
     """This function sets up and returns the application"""
 
     app = Flask(__name__, instance_relative_config=True)
