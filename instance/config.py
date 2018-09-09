@@ -8,9 +8,14 @@ class Config(object):
     """Parent configuration class."""
     DEBUG = False
     CSRF_ENABLED = True
-    SECRET_KEY = os.getenv("SECRET_KEY", "Dalahome")
-    DATABASE_URL = "dbname='testdb' host='localhost'\
+    SECRET_KEY = os.getenv("SECRET_KEY", "kalongo")
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
+
+"""
+    "dbname='stackoverflow' host='localhost'\
                  port='5432' user='Mcogol' password='root'"
+"""
 
 
 class DevelopmentConfig(Config):
