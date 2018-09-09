@@ -9,7 +9,7 @@ python:
 
 install:
   - pip install -r requirements.txt
-  - pip install coveralls
+  - pip install coveralls codecov
 
 services:
   - postgresql
@@ -23,6 +23,8 @@ before_script:
 
 script:
   - nosetests app/tests -v --with-coverage --cover-package=app
+  - nosetests --with-coverage --cover-package=app app/tests
 
 after_success:
   - coveralls
+  - codecov --token=f1cbd24e-c374-4b4d-9ea2-ff7b54ffc473
