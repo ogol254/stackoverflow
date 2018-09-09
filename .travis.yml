@@ -22,10 +22,8 @@ before_script:
 
 
 script:
-  - nosetests app/tests -v --with-coverage --cover-package=app
   - nosetests --with-coverage --cover-package=app app/tests
 
 after_success:
   - coveralls
-  - coveralls --token=445b7398cf92cde8177b7de5684e23e30f6a2eb9da6f2083ef8f1a0170d7f55c
   - codecov --token=f1cbd24e-c374-4b4d-9ea2-ff7b54ffc473
