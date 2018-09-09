@@ -2,7 +2,7 @@
 
 ## Introduction
 
-[![Build Status](https://travis-ci.org/ogol254/stackoverflow.svg?branch=master)](https://travis-ci.org/ogol254/stackoverflow)[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/ce5fa5121eb851f81114) [![Maintainability](https://api.codeclimate.com/v1/badges/4754b5342d6a948f3f8f/maintainability)](https://codeclimate.com/github/ogol254/stackoverflow/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/4754b5342d6a948f3f8f/test_coverage)](https://codeclimate.com/github/ogol254/stackoverflow/test_coverage)
+[![Build Status](https://travis-ci.org/ogol254/stackoverflow.svg?branch=master)](https://travis-ci.org/ogol254/stackoverflow) [![Maintainability](https://api.codeclimate.com/v1/badges/4754b5342d6a948f3f8f/maintainability)](https://codeclimate.com/github/ogol254/stackoverflow/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/4754b5342d6a948f3f8f/test_coverage)](https://codeclimate.com/github/ogol254/stackoverflow/test_coverage)
 
 ## Run in Postman
 
@@ -27,10 +27,6 @@ Clone the repository [```here```](https://github.com/rickynyairo/StackOverflow-l
 Navigate to the UI directory
 On your preferred browser, open index.html
 Alternatively, the site is [```hosted here```](blalal)
-
-*To test the API:*
-Navigate to the API/ directory
-In a virtual environment, perform the following:
 
 
 ```$ pip install -r requirements.txt```
