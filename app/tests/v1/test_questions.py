@@ -132,9 +132,9 @@ class TestQuestions(unittest.TestCase):
     def test_edit_question(self):
         """Test that a user can edit the text of a question that they've posted"""
         user_id, auth_token = self.create_user()
-        questionid = int(self.post_data(auth_token=auth_token).json['question_id'])
+        self.qid = int(self.post_data(auth_token=auth_token).json['question_id'])
         headers = {"Authorization": "Bearer {}".format(auth_token)}
-        path = "/api/v1/questions/{}".format(questionid)
+        path = "/api/v1/questions/{}".format(self.qid)
         data = {"text": "edited question"}
         result = self.client.put(path,
                                  headers=headers,
@@ -146,9 +146,9 @@ class TestQuestions(unittest.TestCase):
     def test_delete_question(self):
         """Test that a user can delete a question that they have posted"""
         user_id, auth_token = self.create_user()
-        questionid = int(self.post_data(auth_token=auth_token).json['question_id'])
+        #qid = int(self.post_data(auth_token=auth_token).json['question_id'])
         headers = {"Authorization": "Bearer {}".format(auth_token)}
-        path = "/api/v1/questions/{}".format(questionid)
+        path = "/api/v1/questions/{}".format(self.qid)
         result = self.client.delete(path,
                                     headers=headers,
                                     content_type='application/json')
