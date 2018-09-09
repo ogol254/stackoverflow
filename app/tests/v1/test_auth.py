@@ -33,7 +33,7 @@ class AuthTest(unittest.TestCase):
         with self.app.app_context():
             self.db = _init_db()
 
-    def post_data(self, path='/api/v2/auth/signup', data={}):
+    def post_data(self, path='/api/v1/auth/signup', data={}):
         """This function performs a POST request using the testing client"""
         if not data:
             data = self.user
@@ -61,19 +61,19 @@ class AuthTest(unittest.TestCase):
 
     def test_error_messages(self):
         """Test that the endpoint responds with the correct error message"""
-        empty_req = self.client.post("/api/v2/auth/signup", data={})
+        empty_req = self.client.post("/api/v1/auth/signup", data={})
         self.assertEqual(empty_req.status_code, 400)
         bad_data = self.user
         del bad_data['first_name']
-        empty_params = self.client.post("/api/v2/auth/signup", data=bad_data)
+        empty_params = self.client.post("/api/v1/auth/signup", data=bad_data)
         self.assertEqual(empty_params.status_code, 400)
-        empty_req = self.client.post("/api/v2/auth/login", data={"": ""})
+        empty_req = self.client.post("/api/v1/auth/login", data={"": ""})
         self.assertEqual(empty_req.status_code, 400)
         bad_data = {
             "username": "",
             "password": "pass"
         }
-        empty_params = self.client.post("/api/v2/auth/signup", data=bad_data)
+        empty_params = self.client.post("/api/v1/auth/signup", data=bad_data)
         self.assertEqual(empty_params.status_code, 400)
 
     def test_user_login(self):
@@ -84,14 +84,14 @@ class AuthTest(unittest.TestCase):
             password=self.user['password']
         )
         # attempt to log in
-        login = self.post_data('/api/v2/auth/login', data=payload)
+        login = self.post_data('/api/v1/auth/login', data=payload)
         self.assertEqual(login.json['message'], 'success')
         self.assertTrue(login.json['AuthToken'])
 
     def test_user_logout(self):
         """Test that the user can logout using a POST request"""
         new_user = self.post_data().json
-        path = "/api/v2/auth/logout"
+        path = "/api/v1/auth/logout"
         token = new_user['AuthToken']
         headers = {"Authorization": "Bearer {}".format(token)}
         logout = self.client.post(path=path,
@@ -113,7 +113,7 @@ class AuthTest(unittest.TestCase):
                 string.ascii_letters) for x in range(randint(7, 10))),
         }
         # attempt to log in
-        login = self.post_data('/api/v2/auth/login', data=un_user)
+        login = self.post_data('/api/v1/auth/login', data=un_user)
         self.assertEqual(login.status_code, 400)
 
     def tearDown(self):
