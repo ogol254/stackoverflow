@@ -18,7 +18,7 @@ class AuthTest(unittest.TestCase):
 
     def setUp(self):
         """Performs variable definition and app initialization"""
-        self.app = create_app('testing')
+        self.app = create_app()
         self.client = self.app.test_client()
 
         self.user = {
