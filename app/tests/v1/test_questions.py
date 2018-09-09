@@ -12,28 +12,28 @@ from ... import create_app
 from ...database import _init_db
 from ...database import destroy
 
-##from ...api.v1.models.user_model import UserModel
-
+from ...api.v1.models.user_model import UserModel
 
 
 class TestQuestions(unittest.TestCase):
     """This class collects all the test cases for the questions"""
+
     def create_user(self):
         """create a fictitious user"""
         username = "".join(choice(
-                           string.ascii_letters) for x in range (randint(7,10)))
+                           string.ascii_letters) for x in range(randint(7, 10)))
         params = {
-                "first_name":"ugali",
-                "last_name":"mayai",
-                "email":"ugalimayai@gmail.com",
-                "username":username,
-                "password":"password"
-            }
+            "first_name": "ugali",
+            "last_name": "mayai",
+            "email": "ugalimayai@gmail.com",
+            "username": username,
+            "password": "password"
+        }
         path = "/api/v1/auth/signup"
         user = self.client.post(path,
                                 data=json.dumps(params),
                                 content_type="application/json")
-        
+
         user_id = user.json['user_id']
         auth_token = user.json['AuthToken']
         return int(user_id), auth_token
@@ -43,9 +43,9 @@ class TestQuestions(unittest.TestCase):
         self.app = create_app("testing")
         self.client = self.app.test_client()
         self.question = {
-            "text":"".join(choice(
-                           string.ascii_letters) for x in range (randint(20,25))),
-            "description":"I am looking for the fastest programming language in terms\
+            "text": "".join(choice(
+                string.ascii_letters) for x in range(randint(20, 25))),
+            "description": "I am looking for the fastest programming language in terms\
                             of memory management for a very high performance project."
         }
         with self.app.app_context():
@@ -59,7 +59,7 @@ class TestQuestions(unittest.TestCase):
             user = self.create_user()
             auth_token = user[1]
         if not headers:
-            headers = {"Authorization":"Bearer {}".format(auth_token)}
+            headers = {"Authorization": "Bearer {}".format(auth_token)}
         result = self.client.post(path, data=json.dumps(data),
                                   headers=headers,
                                   content_type='application/json')
@@ -81,7 +81,6 @@ class TestQuestions(unittest.TestCase):
         self.assertTrue(new_question.json['message'])
         self.assertTrue(new_question.json['question_id'])
 
-        
     def test_error_messages(self):
         """Test that the endpoint responds with the correct error message"""
         auth_token = self.create_user()[1]
@@ -93,16 +92,16 @@ class TestQuestions(unittest.TestCase):
         del bad_data['text']
         empty_params = self.post_data(data=bad_data)
         self.assertEqual(empty_params.status_code, 400)
-        empty_req = self.post_data(data={"":""})
+        empty_req = self.post_data(data={"": ""})
         self.assertEqual(empty_req.status_code, 400)
         bad_data = {
-            "user_id":"",
-            "textsss":"What is the fastest programming language and why?",
-            "description":"Description"
+            "user_id": "",
+            "textsss": "What is the fastest programming language and why?",
+            "description": "Description"
         }
         bad_req = self.post_data(data=bad_data)
         self.assertEqual(bad_req.status_code, 400)
-    
+
     def test_unauthorized_request(self):
         """Test that the endpoint rejects unauthorized requests"""
         # test false token
@@ -122,21 +121,21 @@ class TestQuestions(unittest.TestCase):
     def test_get_questions_associated_to_user(self):
         """Test that the API responds with all the questions of a particular user"""
         user_id, auth_token = self.create_user()
-        question = self.post_data(headers={"Authorization":"Bearer {}".format(auth_token)})
+        question = self.post_data(headers={"Authorization": "Bearer {}".format(auth_token)})
         username = question.json['asked_by']
         path = "/api/v1/questions/{}".format(username)
         req = self.client.get(path=path)
         # import pdb;pdb.set_trace()
         self.assertEqual(req.status_code, 200)
         self.assertEqual(username, req.json["username"])
-    
+
     def test_edit_question(self):
         """Test that a user can edit the text of a question that they've posted"""
         user_id, auth_token = self.create_user()
         question_id = int(self.post_data(auth_token=auth_token).json['question_id'])
-        headers = {"Authorization":"Bearer {}".format(auth_token)}
-        path  = "/api/v1/questions/{}".format(question_id)
-        data = {"text":"edited question"}
+        headers = {"Authorization": "Bearer {}".format(auth_token)}
+        path = "/api/v1/questions/{}".format(question_id)
+        data = {"text": "edited question"}
         result = self.client.put(path,
                                  headers=headers,
                                  data=json.dumps(data),
@@ -148,8 +147,8 @@ class TestQuestions(unittest.TestCase):
         """Test that a user can delete a question that they have posted"""
         user_id, auth_token = self.create_user()
         question_id = int(self.post_data(auth_token=auth_token).json['question_id'])
-        headers = {"Authorization":"Bearer {}".format(auth_token)}
-        path  = "/api/v1/questions/{}".format(question_id)
+        headers = {"Authorization": "Bearer {}".format(auth_token)}
+        path = "/api/v1/questions/{}".format(question_id)
         result = self.client.delete(path,
                                     headers=headers,
                                     content_type='application/json')
@@ -161,11 +160,11 @@ class TestQuestions(unittest.TestCase):
         auth_token = self.create_user()[1]
         qstn_1 = int(self.post_data(auth_token=auth_token).json['question_id'])
         # post 5 answers to question 1
-        path  = "/api/v1/questions/{}/answers".format(qstn_1)
+        path = "/api/v1/questions/{}/answers".format(qstn_1)
         for x in range(6):
-            random_answer ={
-            "text":"".join(choice(
-                           string.ascii_letters) for x in range (randint(20,25)))
+            random_answer = {
+                "text": "".join(choice(
+                    string.ascii_letters) for x in range(randint(20, 25)))
             }
             ans = self.post_data(path=path,
                                  data=random_answer,
@@ -180,6 +179,7 @@ class TestQuestions(unittest.TestCase):
         with self.app.app_context():
             destroy()
             self.db.close()
+
 
 if __name__ == "__main__":
     unittest.main()

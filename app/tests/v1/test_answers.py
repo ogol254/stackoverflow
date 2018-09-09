@@ -11,9 +11,9 @@ from ... import create_app
 from ...database import _init_db
 from ...database import destroy
 
-#from ...api.v1.models.user_model import UserModel
-#from ...api.v1.models.question_model import QuestionModel
-#from ...api.v1.models.answer_model import AnswerModel
+from ...api.v1.models.user_model import UserModel
+from ...api.v1.models.question_model import QuestionModel
+from ...api.v1.models.answer_model import AnswerModel
 
 
 class TestAnswers(unittest.TestCase):
