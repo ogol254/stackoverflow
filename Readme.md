@@ -19,7 +19,7 @@
 
 ### Installing
 
-Clone the repository [```here```](https://github.com/rickynyairo/StackOverflow-lite/)
+Clone the repository [```here```](https://github.com/ogol254/stackoverflow)
 
 ### Testing
 
