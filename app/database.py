@@ -14,7 +14,11 @@ def init_db():
     db_url = current_app.config['DATABASE_URL']
     # import pdb;pdb.set_trace()
     conn = psycopg2.connect(db_url)
-    return conn
+    with conn as conn, conn.cursor() as cursor:
+        with current_app.open_resource('stackovflow.sql', mode='r') as sql:
+            cursor.execute(sql.read())
+        conn.commit()
+        return conn
 
 
 def connect_to(url):
