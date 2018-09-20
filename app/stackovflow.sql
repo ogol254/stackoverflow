@@ -61,24 +61,3 @@ CREATE TABLE IF NOT EXISTS users (
     password character varying(500) NOT NULL
 );
 
-COMMENT ON TABLE users IS 'Store user details';
-
-ALTER TABLE ONLY answers
-    ADD CONSTRAINT answers_pkey PRIMARY KEY (answer_id);
-
-ALTER TABLE ONLY questions
-    ADD CONSTRAINT questions_pkey PRIMARY KEY (question_id);
-
-ALTER TABLE ONLY users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
-
-ALTER TABLE ONLY answers
-    ADD CONSTRAINT questions_question_id_fkey FOREIGN KEY (question_id) REFERENCES questions(question_id) ON UPDATE CASCADE NOT VALID;
-
-ALTER TABLE ONLY questions
-    ADD CONSTRAINT users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE NOT VALID;
-
-ALTER TABLE ONLY answers
-    ADD CONSTRAINT users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE NOT VALID;
-
-ALTER TABLE users ADD UNIQUE (email, username);
