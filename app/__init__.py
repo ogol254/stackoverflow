@@ -105,6 +105,7 @@ def create_app(config_name='development'):
     from .api.v1 import version1 as v1
     app.register_blueprint(v1)
 
+
     app.register_error_handler(400, bad_request)
     app.register_error_handler(401, unauthorized)
     app.register_error_handler(404, not_found)

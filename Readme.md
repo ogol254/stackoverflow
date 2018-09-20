@@ -2,7 +2,7 @@
 
 ## Introduction
 
-[![Build Status](https://travis-ci.org/ogol254/stackoverflow.svg?branch=master)](https://travis-ci.org/ogol254/stackoverflow) [![Maintainability](https://api.codeclimate.com/v1/badges/4754b5342d6a948f3f8f/maintainability)](https://codeclimate.com/github/ogol254/stackoverflow/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/4754b5342d6a948f3f8f/test_coverage)](https://codeclimate.com/github/ogol254/stackoverflow/test_coverage) [![codecov](https://codecov.io/gh/ogol254/stackoverflow/branch/master/graph/badge.svg)](https://codecov.io/gh/ogol254/stackoverflow)
+[![Build Status](https://travis-ci.org/ogol254/stackoverflow.svg?branch=master)](https://travis-ci.org/ogol254/stackoverflow) [![Maintainability](https://api.codeclimate.com/v1/badges/4754b5342d6a948f3f8f/maintainability)](https://codeclimate.com/github/ogol254/stackoverflow/maintainability) [![codecov](https://codecov.io/gh/ogol254/stackoverflow/branch/master/graph/badge.svg)](https://codecov.io/gh/ogol254/stackoverflow) [![Coverage Status](https://coveralls.io/repos/github/ogol254/stackoverflow/badge.svg?branch=master)](https://coveralls.io/github/ogol254/stackoverflow?branch=master)
 
 ## Run in Postman
 
