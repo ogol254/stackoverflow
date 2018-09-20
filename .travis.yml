@@ -5,7 +5,7 @@ env:
   DATABASE_TEST_URL="dbname='stackoverflow_db' host='127.0.0.1' port='5432' user='postgres' password=''"
   APP_SETTINGS="testing"
 python:
-  - "3.6"
+  - "2.7"
 
 install:
   - pip install -r requirements.txt
