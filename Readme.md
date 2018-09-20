@@ -2,7 +2,7 @@
 
 ## Introduction
 
-[![Build Status](https://travis-ci.org/ogol254/stackoverflow.svg?branch=master)](https://travis-ci.org/ogol254/stackoverflow) [![Maintainability](https://api.codeclimate.com/v1/badges/4754b5342d6a948f3f8f/maintainability)](https://codeclimate.com/github/ogol254/stackoverflow/maintainability) [![codecov](https://codecov.io/gh/ogol254/stackoverflow/branch/master/graph/badge.svg)](https://codecov.io/gh/ogol254/stackoverflow) [![Coverage Status](https://coveralls.io/repos/github/ogol254/stackoverflow/badge.svg?branch=master)](https://coveralls.io/github/ogol254/stackoverflow?branch=master)
+[![Build Status](https://travis-ci.org/ogol254/stackoverflow.svg?branch=master)](https://travis-ci.org/ogol254/stackoverflow) [![Maintainability](https://api.codeclimate.com/v1/badges/4754b5342d6a948f3f8f/maintainability)](https://codeclimate.com/github/ogol254/stackoverflow/maintainability)  [![Coverage Status](https://coveralls.io/repos/github/ogol254/stackoverflow/badge.svg?branch=master)](https://coveralls.io/github/ogol254/stackoverflow?branch=master)
 
 ## Run in Postman
 
@@ -21,19 +21,31 @@
 
 Clone the repository [```here```](https://github.com/ogol254/stackoverflow)
 
+1. ```$ pip install -r requirements.txt```
+
+### Set up database and virtual environment & Database 
+
+Go to postgres terminal 
+
+2. ``` CREATE DATABASE database_name ; ```
+3. ``` CREATE DATABASE test_database_name ; ```
+
+### Storing environment variables 
+
+```
+export FLASK_APP="run.py"
+export APP_SETTINGS="development"
+export DATABASE_URL="dbname='database_name' host='localhost' port='5432' user='postgres' password='root'"
+export DATABASE_TEST_URL="dbname='test_database_name' host='localhost' port='5432' user='postgress' password='root'"
+```
+
+### Running the application
+
+4. ```$ python run.py```
+
 ### Testing
 
-*To test the UI:*
-Navigate to the UI directory
-On your preferred browser, open index.html
-Alternatively, the site is [```hosted here```](blalal)
-
-
-```$ pip install -r requirements.txt```
-
-```$ nosetests app/tests```
-
-```$ python run.py```
+5. ```$ nosetests app/tests```
 
 ### API-Endpoints
 
