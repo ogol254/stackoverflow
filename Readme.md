@@ -19,18 +19,38 @@
 
 ### Installing
 
-Clone the repository [```here```](https://github.com/ogol254/stackoverflow)
+*Step 1*
 
-1. ```$ pip install -r requirements.txt```
+Create directory
+```$ mkdir stackoverflow```
 
-### Set up database and virtual environment & Database 
+```$ cd stackoverflow```
 
-Go to postgres terminal 
+Create and activate virtual environment
+```$ virtualenv env```
 
-2. ``` CREATE DATABASE database_name ; ```
-3. ``` CREATE DATABASE test_database_name ; ```
+```$ source env/bin/activate```
 
-### Storing environment variables 
+Clone the repository [```here```](https://github.com/ogol254/stackoverflow) or 
+
+``` git clone https://github.com/ogol254/stackoverflow ```
+
+Install project dependencies 
+```$ pip install -r requirements.txt```
+
+
+*Step 2*
+
+#### Set up database and virtual environment & Database 
+
+Go to postgres terminal and create the following databases
+
+``` # CREATE DATABASE database_name ; ```
+``` # CREATE DATABASE test_database_name ; ```
+
+*Step 3*
+
+#### Storing environment variables 
 
 ```
 export FLASK_APP="run.py"
@@ -39,13 +59,17 @@ export DATABASE_URL="dbname='database_name' host='localhost' port='5432' user='p
 export DATABASE_TEST_URL="dbname='test_database_name' host='localhost' port='5432' user='postgress' password='root'"
 ```
 
-### Running the application
+*Step 4*
 
-4. ```$ python run.py```
+#### Running the application
 
-### Testing
+```$ python run.py```
 
-5. ```$ nosetests app/tests```
+*Step 5*
+
+#### Testing
+
+```$ nosetests app/tests```
 
 ### API-Endpoints
 
