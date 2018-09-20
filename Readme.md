@@ -27,7 +27,9 @@ Create directory
 ```$ cd stackoverflow```
 
 Create and activate virtual environment
+
 ```$ virtualenv env```
+
 
 ```$ source env/bin/activate```
 
@@ -36,16 +38,25 @@ Clone the repository [```here```](https://github.com/ogol254/stackoverflow) or
 ``` git clone https://github.com/ogol254/stackoverflow ```
 
 Install project dependencies 
+
+
 ```$ pip install -r requirements.txt```
 
 
-*Step 2*
+*Step 2* 
 
 #### Set up database and virtual environment & Database 
 
 Go to postgres terminal and create the following databases
 
+Main database 
+
+
 ``` # CREATE DATABASE database_name ; ```
+
+Test database 
+
+
 ``` # CREATE DATABASE test_database_name ; ```
 
 *Step 3*
