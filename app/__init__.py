@@ -86,8 +86,8 @@ def forbidden(error):
 
 
 def unauthorized(error):
-    """This function creates a custom JSON response when an unauthorized request is made"""
-    message = "You are not authorized to access this resource, please confirm credentials"
+    """Unauthorsed access creds"""
+    message = "Access denied"
     response = make_response(jsonify(error_handler(error, message)), 401)
     return response
 
