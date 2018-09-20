@@ -29,7 +29,7 @@ class AnswerModel(BaseModel):
         }
         database = self.db
         curr = database.cursor()
-        query = """INSERT INTO answers (question_id, user_id, text, up_votes, date_created) VALUES (%(question_id)s,\
+        query = """INSERT INTO answers VALUES (nextval('increment_pkey'), %(question_id)s,\
                    %(user_id)s, %(text)s, %(up_votes)s,('now')) RETURNING answer_id;"""
         curr.execute(query, answer)
         answer_id = curr.fetchone()[0]
