@@ -31,7 +31,7 @@ class QuestionModel(BaseModel):
         }
         database = self.db
         curr = database.cursor()
-        query = """INSERT INTO questions VALUES (nextval('increment_pkey'), %(user_id)s, %(text)s,\
+        query = """INSERT INTO questions (user_id, text, description, date_created) VALUES (%(user_id)s, %(text)s,\
                 %(description)s, ('now')) RETURNING question_id;"""
         curr.execute(query, question)
         question_id = curr.fetchone()[0]
